@@ -4,11 +4,12 @@ import { BooksService } from './books.service';
 import { BooksController } from './books.controller';
 import { Book } from './books.entity';
 import { BooksRepository } from './books.repository';
+import { JwtStrategy } from '../../core/guard/jwt.strategy';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Book])],
   controllers: [BooksController],
-  // кого в кого
-  providers: [BooksService, BooksRepository],
+  // кого в кого регистрируем стратегию
+  providers: [BooksService, BooksRepository, JwtStrategy],
 })
 export class BooksModule {}
