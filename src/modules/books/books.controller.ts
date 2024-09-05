@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -41,8 +42,8 @@ export class BooksController {
   @Post()
   @HttpCode(201)
   @UseGuards(JwtAuthGuard)
-  async createBook(@Body() bookDto: CreateBookDto) {
-    return this.booksService.createBook(bookDto);
+  async createBook(@Body() bookDto: CreateBookDto, @Request() req: any) {
+    return this.booksService.createBook(bookDto, req.userId);
     // необходимо вызвать соответствующий метод сервиса и вернуть результат
     //const result = await this.booksService.someMethod();
   }
