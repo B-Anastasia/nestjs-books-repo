@@ -2,6 +2,7 @@ import { Entity, Column } from 'typeorm';
 import { BaseEntity } from '../../core/entity/base.entity';
 import { CreateBookDto } from './dto/create-book.dto';
 import { ForbiddenException } from '@nestjs/common';
+import { UpdateBookDto } from './dto/update-book.dto';
 
 @Entity('books')
 export class Book extends BaseEntity {
@@ -32,5 +33,12 @@ export class Book extends BaseEntity {
     book.ownerId = userId;
 
     return book;
+  }
+
+  updateBook(dto: UpdateBookDto, userId: number) {
+    if (this.ownerId !== userId) {
+      throw new ForbiddenException('not owner');
+    }
+    this.title = dto.title ?? this.title;
   }
 }
