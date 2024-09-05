@@ -22,6 +22,8 @@ export class BooksRepository {
     const result = await this.booksORMRepository.findOne({ where: { id } });
 
     if (!result) {
+      // HttpException можно передать код и ошибку
+      // или настроить exception filter throw {code: 111, text: 'Error}
       throw new NotFoundException('book not found'); //тут код прервется и выдаст ошибку, которую nestjs отправит в ответе
     }
 

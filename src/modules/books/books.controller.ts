@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
   Param,
   Post,
   Put,
@@ -16,14 +17,17 @@ export class BooksController {
   // Получить список всех книг
   @Get()
   async getAllBooks() {
+    return this.booksService.getAllBooks();
     // необходимо вызвать соответствующий метод сервиса и вернуть результат
     //const result = await this.booksService.someMethod();
     //return result
+    // return [];
   }
 
   // Получить книгу по ID
   @Get(':id')
   async getBookById(@Param('id') id: number) {
+    return this.booksService.getBookById(id);
     // необходимо вызвать соответствующий метод сервиса и вернуть результат
     //const result = await this.booksService.someMethod();
     //return result
@@ -31,7 +35,9 @@ export class BooksController {
 
   // Создать новую книгу
   @Post()
+  @HttpCode(201)
   async createBook(@Body() bookDto: any) {
+    return this.booksService.createBook(bookDto);
     // необходимо вызвать соответствующий метод сервиса и вернуть результат
     //const result = await this.booksService.someMethod();
   }

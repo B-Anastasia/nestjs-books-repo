@@ -8,6 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   //подключение глобального валидационного pipe https://docs.nestjs.com/techniques/validation
+  // анализирует и id возвращает number если строка приходит в url
   app.useGlobalPipes(new ValidationPipe());
 
   //разрешены запросы с любых доменов
