@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { BooksRepository } from './books.repository';
 import { Book } from './books.entity';
 import { CreateBookDto } from './dto/create-book.dto';
@@ -24,17 +24,7 @@ export class BooksService {
   // Создать новую книгу
   async createBook(dto: CreateBookDto, userId: number): Promise<void> {
     const user = await this.userRepository.findByIdOrNotFoundFail(userId);
-
-    if (user.age < 18 && dto.ageRestriction >= 18) {
-      throw new ForbiddenException('too yang, Bro');
-    }
-
-    const book = new Book();
-    book.title = dto.title;
-    book.ageRestriction = dto.ageRestriction;
-    book.author = dto.author;
-    book.ownerId = userId;
-
+    const book = Book.createBook(dto, userId, user.age);
     await this.booksRepository.save(book);
   }
 }
