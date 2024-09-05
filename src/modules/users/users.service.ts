@@ -8,6 +8,7 @@ import bcrypt from 'bcrypt';
 export class UsersService {
   constructor(private usersRepository: UsersRepository) {}
   async registerUser(dto: RegisterUserDto): Promise<number> {
+    // потом сравниваем с AuthService
     const passwordHash = await bcrypt.hash(dto.password, 10);
     const user = new User();
     user.age = dto.age;
