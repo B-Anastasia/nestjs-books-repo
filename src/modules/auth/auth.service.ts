@@ -2,10 +2,15 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersRepository } from '../users/users.repository';
 // сравним хеш пароли
 import bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userRepository: UsersRepository) {}
+  // import зависимости
+  constructor(
+    private userRepository: UsersRepository,
+    private jwtService: JwtService,
+  ) {}
   async validateUser(
     email: string,
     password: string,
@@ -24,6 +29,14 @@ export class AuthService {
 
     return {
       userId: user.id,
+    };
+  }
+
+  login(userId: string) {
+    const token = this.jwtService.sign({ userId });
+
+    return {
+      accessToken: token,
     };
   }
 }
